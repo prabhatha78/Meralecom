@@ -1,0 +1,421 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Meral Dashboard</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/admin/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link href="/admin/css/main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="screen-overlay"></div>
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="index.html" class="brand-wrap">
+                <img src="/images/log.png" class="logo" alt="Meral Dashboard">
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i>
+                </button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link"> <i
+                            class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Products</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/product-list">Product List</a>
+                        <a href="/admin/category-list">Categories</a>
+                        <a href="/admin/ingredient-list">Ingredients</a>
+                        <a href="/admin/coupon-list">Coupons</a>
+                        <a href="/admin/add-product">Add product</a>
+                    </div>
+                </li>
+                <li class="menu-item has-submenu active">
+                    <a class="menu-link"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/order-list" class="active">Order list</a>
+                    </div>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link"> <i class="icon material-icons md-store"></i>
+                        <span class="text">Users</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/user-list">Users list</a>
+                    </div>
+                </li>
+            </ul>
+            <hr>
+            <br>
+            <br>
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i
+                        class="material-icons md-apps"></i> </button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i
+                                class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
+                            aria-expanded="false"> <img class="img-xs rounded-circle"
+                                src="/images/log.png" alt="User"></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item text-danger" href="/admin/logout"><i
+                                    class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Order detail</h2>
+                    <p>Details for Order ID: {{order._id}}</p>
+                </div>
+            </div>
+            <div class="card">
+                <header class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
+                            <span>
+                                <i class="material-icons md-calendar_today"></i> <b>{{order.orderDate}}</b>
+                            </span> <br>
+                        </div>
+                        <div class="col-lg-6 col-md-6 ms-auto text-md-end">
+                                    
+                            {{#if (eq order.orderStatus "placed")}}
+                            <form class="form">
+                                <div class="switch-field">
+                                    {{#if order.shipmentStatus.delivered.status}}
+                                    {{#if order.shipmentStatus.outForDelivery.status}}
+                                    {{#if order.shipmentStatus.shipped.status}}
+                                    {{#if order.shipmentStatus.orderPlaced.status}}
+                                    <input type="radio" id="radio-three" name="switch-two" onclick="changeOrderStatus('{{order._id}}',1)"/>
+                                    <label for="radio-three">Placed</label>
+                                    <input type="radio" id="radio-four" name="switch-two" onclick="changeOrderStatus('{{order._id}}',2)"/>
+                                    <label for="radio-four">Shipped</label>
+                                    <input type="radio" id="radio-five" name="switch-two" onclick="changeOrderStatus('{{order._id}}',3)"/>
+                                    <label for="radio-five">Out for delivery</label>
+                                    <input type="radio" id="radio-six" name="switch-two" onclick="changeOrderStatus('{{order._id}}',4)" checked/>
+                                    <label for="radio-six">Delivered</label> 
+                                    {{/if}}{{/if}}{{/if}}
+                                    {{else}}
+                                    {{#if order.shipmentStatus.outForDelivery.status}}
+                                    {{#if order.shipmentStatus.shipped.status}}
+                                    {{#if order.shipmentStatus.orderPlaced.status}}
+                                    <input type="radio" id="radio-three" name="switch-two" onclick="changeOrderStatus('{{order._id}}',1)"/>
+                                    <label for="radio-three">Placed</label>
+                                    <input type="radio" id="radio-four" name="switch-two" onclick="changeOrderStatus('{{order._id}}',2)"/>
+                                    <label for="radio-four">Shipped</label>
+                                    <input type="radio" id="radio-five" name="switch-two" onclick="changeOrderStatus('{{order._id}}',3)" checked/>
+                                    <label for="radio-five">Out for delivery</label>
+                                    <input type="radio" id="radio-six" name="switch-two" onclick="changeOrderStatus('{{order._id}}',4)"/>
+                                    <label for="radio-six">Delivered</label> 
+                                    {{/if}}{{/if}}
+                                    {{else}}
+                                    {{#if order.shipmentStatus.shipped.status}}
+                                    {{#if order.shipmentStatus.orderPlaced.status}}
+                                    <input type="radio" id="radio-three" name="switch-two" onclick="changeOrderStatus('{{order._id}}',1)"/>
+                                    <label for="radio-three">Placed</label>
+                                    <input type="radio" id="radio-four" name="switch-two" onclick="changeOrderStatus('{{order._id}}',2)" checked/>
+                                    <label for="radio-four">Shipped</label>
+                                    <input type="radio" id="radio-five" name="switch-two" onclick="changeOrderStatus('{{order._id}}',3)"/>
+                                    <label for="radio-five">Out for delivery</label>
+                                    <input type="radio" id="radio-six" name="switch-two" onclick="changeOrderStatus('{{order._id}}',4)"/>
+                                    <label for="radio-six">Delivered</label>
+                                    {{/if}}
+                                    {{else}}
+                                    <input type="radio" id="radio-three" name="switch-two" onclick="changeOrderStatus('{{order._id}}',1)" checked/>
+                                    <label for="radio-three">Placed</label>
+                                    <input type="radio" id="radio-four" name="switch-two" onclick="changeOrderStatus('{{order._id}}',2)"/>
+                                    <label for="radio-four">Shipped</label>
+                                    <input type="radio" id="radio-five" name="switch-two" onclick="changeOrderStatus('{{order._id}}',3)"/>
+                                    <label for="radio-five">Out for delivery</label>
+                                    <input type="radio" id="radio-six" name="switch-two" onclick="changeOrderStatus('{{order._id}}',4)"/>
+                                    <label for="radio-six">Delivered</label>
+                                    {{/if}}
+                                    {{/if}}
+                                    {{/if}} 
+                                </div>
+                            </form>
+                            {{/if}}
+                        </div>
+                    </div>
+                </header> <!-- card-header end// -->
+                <div class="card-body">
+                    <div class="row mb-50 mt-20 order-info-wrap">
+                        <div class="col-md-4">
+                            <article class="icontext align-items-start">
+                                <span class="icon icon-sm rounded-circle bg-primary-light">
+                                    <i class="text-primary material-icons md-person"></i>
+                                </span>
+                                <div class="text">
+                                    <h6 class="mb-1">Customer</h6>
+                                    <p class="mb-1">
+                                        {{order.username}}<br>
+                                        +91-{{order.deliveryDetails.mobile}}
+                                    </p>
+                                    <a href="#">View profile</a>
+                                </div>
+                            </article>
+                        </div> <!-- col// -->
+                        <div class="col-md-4">
+                            <article class="icontext align-items-start">
+                                <span class="icon icon-sm rounded-circle bg-primary-light">
+                                    <i class="text-primary material-icons md-local_shipping"></i>
+                                </span>
+                                <div class="text">
+                                    <h6 class="mb-1">Order info</h6>
+                                    <p class="mb-1">
+                                        Shipping: Fargo express <br> Pay method: {{order.paymentMethod}}<br> Status:
+                                    {{#if (eq order.orderStatus "placed")}}
+                                    {{#if order.shipmentStatus.delivered.status}}
+                                    {{#if order.shipmentStatus.outForDelivery.status}}
+                                    {{#if order.shipmentStatus.shipped.status}}
+                                    {{#if order.shipmentStatus.orderPlaced.status}}
+                                    Delivered
+                                    {{/if}}{{/if}}{{/if}}
+                                    {{else}}
+                                    {{#if order.shipmentStatus.outForDelivery.status}}
+                                    {{#if order.shipmentStatus.shipped.status}}
+                                    {{#if order.shipmentStatus.orderPlaced.status}}
+                                    Out for delivery
+                                    {{/if}}{{/if}}
+                                    {{else}}
+                                    {{#if order.shipmentStatus.shipped.status}}
+                                    {{#if order.shipmentStatus.orderPlaced.status}}
+                                    Shipped
+                                    {{/if}}
+                                    {{else}}
+                                    Placed
+                                    {{/if}}
+                                    {{/if}}
+                                    {{/if}} </p>
+                                    <a href="#">Download info</a>
+                                    {{else}}
+                                    <p>
+                                    Cancelled
+                                    {{/if}}
+                                        
+                                    </p>
+                                </div>
+                            </article>
+                        </div> <!-- col// -->
+                        <div class="col-md-4">
+                            <article class="icontext align-items-start">
+                                <span class="icon icon-sm rounded-circle bg-primary-light">
+                                    <i class="text-primary material-icons md-place"></i>
+                                </span>
+                                <div class="text">
+                                    <h6 class="mb-1">Deliver to</h6>
+                                    <p class="mb-1">
+                                        {{order.deliveryDetails.address.line1}},
+                                        {{order.deliveryDetails.address.line2}}, <br>
+                                        {{order.deliveryDetails.address.landmark}}, <br>
+                                        {{order.deliveryDetails.address.citystate}}-
+                                        {{order.deliveryDetails.address.zip}} <br>
+                                    </p>
+                                </div>
+                            </article>
+                        </div> <!-- col// -->
+                    </div> <!-- row // -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th width="40%">Product</th>
+                                            <th width="20%">Unit Price</th>
+                                            <th width="20%">Quantity</th>
+                                            <th width="20%" class="text-end">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each products}}
+                                        <tr>
+                                            <td>
+                                                <a class="itemside" href="#">
+                                                    <div class="left">
+                                                        <img src="/images/product-images/{{this.product.images.[0].filename}} "
+                                                            width="40" height="40" class="img-xs" alt="Item">
+                                                    </div>
+                                                    <div class="info">{{this.product.product_name}}</div>
+                                                </a>
+                                            </td>
+                                            <td> ₹{{this.product.promo_price}} </td>
+                                            <td> {{this.quantity}} </td>
+                                            <td class="text-end"> ₹{{this.productTotal}} </td>
+                                        </tr>
+                                        {{/each}}
+                                        <tr>
+                                            <td colspan="4">
+                                                <article class="float-end">
+                                                    <dl class="dlist">
+                                                        <dt>Subtotal:</dt>
+                                                        <dd>₹{{order.subtotal}}</dd>
+                                                    </dl>
+                                                    <dl class="dlist">
+                                                        <dt>Shipping cost:</dt>
+                                                        <dd>Free</dd>
+                                                    </dl>
+                                                    {{#if order.discount}}
+                                                    <dl class="dlist">
+                                                        <dt>Discount Rate:</dt>
+                                                        <dd>{{order.discountrate}}</dd>
+                                                    </dl>
+                                                    <dl class="dlist">
+                                                        <dt>Discount:</dt>
+                                                        <dd>-₹{{order.discount}}</dd>
+                                                    </dl>
+                                                    {{/if}}
+                                                    <dl class="dlist">
+                                                        <dt>Grand total:</dt>
+                                                        <dd> <b class="h5">₹{{order.total}}</b> </dd>
+                                                    </dl>
+                                                    <dl class="dlist">
+                                                        <dt class="text-muted">Payment:</dt>
+                                                        <dd>
+                                                            {{#if (eq order.orderStatus "placed")}}
+                                                            {{#if (eq order.paymentStatus "Paid")}}
+                                                            <span
+                                                                class="badge badge-pill badge-soft-success">Paid</span>
+                                                            {{else}}
+                                                            <span
+                                                                class="badge badge-pill badge-soft-warning">Pending</span>
+                                                            {{/if}}
+                                                            {{else}}
+                                                            <span
+                                                                class="badge badge-pill badge-soft-danger">Cancelled</span>
+                                                            {{/if}}
+                                                        </dd>
+                                                    </dl>
+                                                </article>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> <!-- table-responsive// -->
+                        </div> <!-- col// -->
+                    </div>
+                </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+        </section> <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script data-cfasync="false"
+                        src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script> ©, Meral-Ecom Pvt Ltd
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">
+                        All rights reserved
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script>
+        function changeOrderStatus(orderId, status) {
+            console.log('>>',status)
+            $.ajax({
+                url: '/admin/change-order-status/' + orderId + '/' + status,
+                method: 'get',
+                success: (response) => {
+                    if (response.status) {
+                        location.reload();
+                    }
+                }
+            })
+        }
+    </script>
+    <script src="admin/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="admin/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="admin/js/vendors/select2.min.js"></script>
+    <script src="admin/js/vendors/perfect-scrollbar.js"></script>
+    <script src="admin/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="admin/js/main.js" type="text/javascript"></script>
+    <style>
+        .switch-field {
+	display: flex;
+	margin-bottom: 36px;
+	overflow: hidden;
+}
+
+.switch-field input {
+	position: absolute !important;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	border: 0;
+	overflow: hidden;
+}
+
+.switch-field label {
+	background-color: #e4e4e4;
+	color: #000;
+	font-size: 14px;
+	line-height: 1;
+	text-align: center;
+	padding: 8px 16px;
+	margin-right: -1px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+	transition: all 0.1s ease-in-out;
+}
+
+.switch-field label:hover {
+	cursor: pointer;
+}
+
+.switch-field input:checked + label {
+	background-color: #207a6bd8;
+    color: #fff;
+	box-shadow: none;
+}
+
+.switch-field label:first-of-type {
+	border-radius: 4px 0 0 4px;
+}
+
+.switch-field label:last-of-type {
+	border-radius: 0 4px 4px 0;
+}
+    </style>
+</body>
+
+</html>

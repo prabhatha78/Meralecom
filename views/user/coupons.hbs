@@ -1,0 +1,135 @@
+<section style="padding-top: 150px;">
+    <div class="headerhny-title text-center mt-3 mb-3">
+        <h3 style="font-weight: 600;" class="hny-title mb-0 p-1 ">Available Coupons</h3>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row justify-content-center m-1 mb-5">
+            {{#each coupon}}
+            {{#if this.status}}
+            <div class="col-md-8 col-sm-10 col-xl-6 mt-4">
+                <div class="coupon-card pt-4">
+                    <h3>{{this.discount}}% off on all products<br>with Minimum order value of
+                        {{this.min_purchase}}</h3>
+                    <di class="coupon-row">
+                        <span class="cpnCode" id="{{this._id}}">{{this.code}}</span>
+                        <span class="cpnBtn" id="cpnBtn{{this._id}}" onclick="copyCode('{{this._id}}')">Copy Code</span>
+                    </di>
+                    <p>Valid Till: {{this.expiry_date}}</p>
+                    <div class="circle1"></div>
+                    <div class="circle2"></div>
+                </div>
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</section>
+
+<style>
+    /*the complete project is in the following link:
+https://github.com/vkive/coupon-code.git
+Follow me on Codepen
+*/
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'poppins', sans-serif;
+    }
+
+    .coupon-card {
+        background: linear-gradient(135deg, #112015, #273c2ce4);
+        color: #fff;
+        text-align: center;
+        padding: 9px 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.305);
+        position: relative;
+    }
+
+    .logo {
+        width: 80px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .coupon-card h3 {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 40px;
+    }
+
+    .coupon-card p {
+        font-size: 15px;
+    }
+
+    .coupon-row {
+        display: flex;
+        align-items: center;
+        margin: 25px auto;
+        width: fit-content;
+    }
+
+    .cpnCode {
+        border: 1px dashed #fff;
+        padding: 10px 20px;
+        border-right: 0;
+        text-transform: uppercase
+    }
+
+    .cpnBtn {
+        border: 1px solid #fff;
+        background: #fff;
+        padding: 10px 20px;
+        color: #112015;
+        cursor: pointer;
+    }
+
+    .circle1,
+    .circle2 {
+        background: #ffffff;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .circle1 {
+        left: -25px;
+    }
+
+    .circle2 {
+        right: -25px;
+    }
+
+    @media screen and (max-width:768px) {
+        .coupon-card h3 {
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 27px;
+        }
+
+        .coupon-row {
+            margin: 14px auto;
+        }
+    }
+</style>
+
+<script>
+    function copyCode(couponId) {
+        const cpnBtn = document.getElementById("cpnBtn" + couponId);
+        const cpnCode = document.getElementById(couponId);
+        navigator.clipboard.writeText(cpnCode.innerHTML);
+        cpnBtn.innerHTML = "COPIED";
+        setTimeout(function () {
+            cpnBtn.innerHTML = "COPY CODE";
+        }, 3000);
+    }
+    cpnBtn.onclick = function () {
+    }
+</script>

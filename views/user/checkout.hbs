@@ -1,0 +1,451 @@
+<section class="p-5">
+    <div class="row">
+        <div class="col-md-4 order-md-2 mb-4 pt-5">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Your cart</span>
+                <span class="badge badge-secondary badge-pill">{{cartCount}}</span>
+            </h4>
+            <ul class="list-group mb-3">
+                {{#each cartItems}}
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        {{!-- <h6 class="my-0">{{this.product.product_name}}</h6> --}}
+                        <img src="/images/product-images/{{this.product.images.[0].filename}} "
+                            style="width:4rem;height:3rem; object-fit:cover">
+                        <small class="text-muted">{{this.product.product_name}}</small>
+                    </div>
+                    <span class="text-muted">₹{{this.price}}</span>
+                </li>
+                {{/each}}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Subtotal (INR)</span>
+                    <strong>₹{{cart.total}}</strong>
+                </li>
+                {{#if cart.coupon}}
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <div class="text-success">
+                        <h6 class="my-0">Coupon discount</h6>
+                        <span id="couponCode">{{cart.coupon}}</span>
+                    </div>
+                    <span class="text-success" id="discount">-₹{{cart.savings}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (INR)</span>
+                    <strong><span id="discountTotal">₹{{cart.finalTotal}}</span></strong>
+                </li>
+            </ul>
+            <form class="card p-2" id="remove_coupon">
+                <div class="input-group">
+                    <input type="text" class="form-control" value="{{cart.coupon}}" name="coupon">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary">Remove</button>
+                    </div>
+                </div>
+            </form>
+            {{else}}
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Total (INR)</span>
+                <strong><span id="discountTotal">₹{{cart.finalTotal}}</span></strong>
+            </li>
+            </ul>
+
+            <form class="card p-2" id="apply_coupon">
+                <p style="font-size: 11px; display: none;" id="coupon-invalid-response" class="text-danger">Invalid
+                    coupon code</p>
+
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter the coupon" name="coupon">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary">Redeem</button>
+                    </div>
+                </div>
+            </form>
+            {{/if}}
+
+
+        </div>
+        <div class="col-md-8 order-md-1 p-5">
+            <h4 class="mb-3">Shipping Address</h4>
+            <form id="checkout-form">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">First name</label>
+                        <input type="text" name="userId" id="" value="{{user._id}}" hidden>
+                        <input type="text" class="form-control" name="firstname" id="firstName"
+                            value="{{user.firstname}}" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Last name</label>
+                        <input type="text" class="form-control" name="lastname" id="lastName" value="{{user.lastname}}"
+                            readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" value="{{user.email}}"
+                            readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="username">Phone</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">+91</span>
+                            </div>
+                            <input type="text" class="form-control" name="contact" id="contact" value="{{user.contact}}">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-2">
+                        <h5 class="mb-3">Select Address</h5>
+                        <div class="">
+                            <div class="row">
+                                {{#each user.address}}
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <label>
+                                        <input type="radio" name="addressId" class="card-input-element" value="{{this.id}}" required/>
+                                        <div class="card card-default card-input">
+                                            <div class="card-body">
+                                                {{this.line1}},{{this.line2}},{{this.landmark}},{{this.citystate}}-{{this.zip}}
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="ml-4 p-2 col-md-12" onclick="showNewAddress()"
+                        style="cursor:pointer;display:flex; justify-content:center;border:1px solid rgba(68, 64, 64, 0.599);max-width:90%;">
+                        <div class="p-2" style="color:black;" data-toggle="modal"
+                            data-target="#address-form">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-block my-3">
+                    <h4 class="mb-3">Payment Method</h4>
+                    <div class="custom-control custom-radio pb-2">
+                        <input id="cod" name="paymentMethod" type="radio" value="COD" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="cod">Cash On Delivery</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="online" name="paymentMethod" type="radio" value="ONLINE" class="custom-control-input"
+                            required>
+                        <label class="custom-control-label" for="online">Online Payment</label>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <button type="submit" class="checkout p-2">PLACE ORDER</button>
+            </form>
+        </div>
+        {{!-- Address Modal --}}
+        <div class="modal fade" id="address-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="coantainer modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title" id="exampleModalLabel">Add new address</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="/add-new-address" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="fname" placeholder="First Name"
+                                    value="{{user.firstname}}" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="lname" placeholder="Last Name"
+                                    value="{{user.lastname}}" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="line1" placeholder="Address Line 1"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="line2"
+                                    placeholder="Address Line 2 (Optional)" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="landmark"
+                                    placeholder="Landmark (Optional)" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="zip" placeholder="ZIP" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="citystate" placeholder="City, State"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="country" placeholder="INDIA" value="INDIA"
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-top-0 d-flex justify-content-center">
+                            <button type="submit" class="btn submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $("#checkout-form").submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/checkout',
+            method: 'post',
+            data: $('#checkout-form').serialize(),
+            success: (response) => {
+                if (response.codSuccess) {
+                    location.href = '/order-success'
+                } else {
+                    razorpayPayment(response)
+                }
+            }
+        })
+    })
+    function razorpayPayment(order) {
+        var options = {
+            "key": "rzp_test_IEOu0EMgUndSfe", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Meral Ecom",
+            "description": "Test Transaction",
+            "image": "http://localhost:3000/images/logo.png",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+
+                verifyPayment(response, order);
+            },
+            "prefill": {
+                "name": "Praveen",
+                "email": "prabhatha78@gmail.com",
+                "contact": "8848703245"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#000000"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+    function verifyPayment(payment, order) {
+        $.ajax({
+            url: '/verify-payment',
+            data: {
+                payment,
+                order
+            },
+            method: 'post',
+            success: ((response) => {
+                if (response.status) {
+                    location.href = "/order-success"
+                } else if (!response.status) {
+                } else {
+                    razorpayPayment(response)
+                }
+            })
+        })
+    }
+</script>
+
+<script>
+    $('#apply_coupon').submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/apply-coupon',
+            method: 'post',
+            data: $('#apply_coupon').serialize(),
+            success: (response) => {
+                if (response.status) {
+                    location.reload();
+                } else {
+                    document.getElementById('coupon-invalid-response').style.display = 'block'
+                }
+            }
+        })
+    })
+</script>
+
+<script>
+    function showNewAddress() {
+        $('#address-form').modal('show');
+    }
+</script>
+
+<script>
+    $('#remove_coupon').submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/remove-coupon',
+            method: 'post',
+            data: $('#remove_coupon').serialize(),
+            success: (response) => {
+                if (response.status) {
+                    location.reload();
+                } else {
+                    alert('tuyuytuytu')
+                }
+            }
+        })
+    })
+</script>
+
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab:wght@400&display=swap");
+
+
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2em;
+    }
+
+    .radio-select-large {
+        background: #ffffff;
+        padding: 1.5em;
+        display: inline-block;
+        border-radius: 0.5em;
+        position: relative;
+        display: flex;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        width: 20em;
+        transition: all 0.2s ease-out;
+        gap: 1em;
+    }
+
+    .radio-select-large .radio-select-large-content {
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .radio-select-large .radio-select-large-content strong {
+        font-weight: bold;
+        display: block;
+        font-family: "Roboto Slab", serif;
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .radio-select-large input[type=radio] {
+        margin: 0;
+        padding: 0;
+        margin-top: 1ch;
+
+    }
+
+    .radio-select-large input[type=radio]::before {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        border-radius: 0.5em;
+        box-shadow: 0;
+        transition: all 0.2s ease-out;
+        cursor: pointer;
+
+    }
+
+
+    .radio-select-large input[type=radio]:checked::before {
+
+        box-shadow: 0 0 0 2px inset #000;
+    }
+
+    input::placeholder {
+        font-size: medium;
+        font-style: normal;
+    }
+
+    .submit-btn {
+        background: black;
+        color: #fff
+    }
+</style>
+
+<style>
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+
+    /**
+  Component
+**/
+
+    label {
+        width: 100%;
+    }
+
+    .card-input-element {
+        display: none;
+    }
+
+    .card-input {
+        margin: 10px;
+        padding: 0px;
+    }
+
+    .card-input:hover {
+        cursor: pointer;
+    }
+
+    .card-input-element:checked+.card-input {
+        box-shadow: 0 0 1px 1px #000;
+    }
+
+
+    .item {
+        border-radius: 4px;
+        padding: 0.5rem;
+        margin: 0.2rem;
+    }
+
+    .item.item-blue {
+        background-color: #B9E5FE;
+        color: #00A5FA;
+    }
+
+    .item.item-green {
+        background-color: #B7E0DC;
+        color: #019888;
+    }
+
+    .item.item-lime {
+        background-color: #C7E8C8;
+        color: #42B045;
+    }
+
+    .item.item-yellow {
+        background-color: #FFEEBA;
+        color: #FF9901;
+    }
+
+    .item.item-pink {
+        background-color: #FABAD0;
+        color: #EF075F;
+    }
+
+    .item.item-red {
+        background-color: #FEC9C6;
+        color: #FD3D08;
+    }
+
+    .item.item-big-width {
+        min-width: 380px;
+    }
+</style>

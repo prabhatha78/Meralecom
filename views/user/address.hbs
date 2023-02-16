@@ -1,0 +1,195 @@
+<div class="headerhny-title text-center mt-5 pt-5 mb-3">
+    <h3 class="hny-title mb-0 p-4">My Address</h3>
+</div>
+
+<section class="pb-5">
+    <div class="container mb-5">
+        <div class="row">
+            {{#each user.address}}
+            <div class="col-md-4 d-flex mt-3 justify-content-center">
+                <div class="card text-start position-relative" style="width: 20rem; background-color: #f6f6f6;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8 mt-2">
+                                <h5>{{this.fname}} {{this.lname}}</h5>
+                            </div>
+                            <div class="col-2 mt-2 d-flex justify-content-center">
+
+                                <a onclick="editAddress()">
+                                    <i style="font-size: 13px; cursor: pointer;"
+                                        class="text-dark fa-solid fa-pen me-2"></i>
+                                </a>
+                            </div>
+                            <div class="col-2 mt-2 d-flex justify-content-center">
+                                <a onclick="deleteAddress('{{this.id}}')">
+                                    <i style="font-size: 13px; cursor: pointer;"
+                                        class="text-dark fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <span class="mt-3">
+                            {{this.line1}},{{this.line2}}, <br>
+                            {{this.landmark}},<br>
+                            {{this.cityState}}-{{this.zip}},<br>{{this.country}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- edit-address Modal -->
+            <div class="modal fade" id="edit-address" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="coantainer modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom-0">
+                            <h5 class="modal-title" id="exampleModalLabel">Add new address</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="/edit-address" method="post">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <input type="text" name="id" value="{{this.id}}" hidden>
+                                    <input type="text" class="form-control" name="fname" placeholder="First Name"
+                                        value="{{this.fname}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="lname" placeholder="Last Name"
+                                        value="{{this.lname}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="line1" value="{{this.line1}}"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="line2"
+                                        value="{{this.line2}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="landmark"
+                                        value="{{this.landmark}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="zip" value="{{this.zip}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="citystate" value="{{this.citystate}}"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="country" placeholder="INDIA"
+                                        value="INDIA" readonly>
+                                </div>
+                            </div>
+                            <div class="modal-footer border-top-0 d-flex justify-content-center">
+                                <button type="submit" class="btn submit-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+
+            <div class="col-md-4 d-flex mt-3 justify-content-center">
+                <div onclick="showNewAddress()" class="card text-start position-relative"
+                    style="width: 20rem; background-color: #f6f6f6;">
+                    <div class="card-body d-flex justify-content-center align-items-center " style="font-size: 24px;">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- address Modal -->
+<div class="modal fade" id="address-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="coantainer modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Add new address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/add-latest-address" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="fname" placeholder="First Name"
+                            value="{{user.firstname}}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="lname" placeholder="Last Name"
+                            value="{{user.lastname}}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="line1" placeholder="Address Line 1" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="line2" placeholder="Address Line 2 (Optional)"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="landmark" placeholder="Landmark (Optional)"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="zip" placeholder="ZIP" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="citystate" placeholder="City, State" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="country" placeholder="INDIA" value="INDIA"
+                            readonly>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 d-flex justify-content-center">
+                    <button type="submit" class="btn submit-btn">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    function showNewAddress() {
+        $('#address-form').modal('show');
+    }
+
+    function editAddress() {
+        $('#edit-address').modal('show');
+    }
+</script>
+
+<script>
+    function deleteAddress(addressId) {
+        $.ajax({
+            url: '/delete-address/' + addressId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    location.reload()
+                }
+            }
+        })
+    }
+
+    function addressAddress(addressId) {
+        $.ajax({
+            url: '/edit-address/' + addressId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    location.reload()
+                }
+            }
+        })
+    }
+</script>

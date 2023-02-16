@@ -1,0 +1,120 @@
+<section class="pb-5 pt-5">
+
+    <div class="container mt-5">
+        {{#if orders}}
+        <div class="headerhny-title text-center mt-5 mb-3 pt-5">
+            <h3 class="hny-title mb-0 mt-5 p-5">My Orders</h3>
+        </div>
+        <div class="row  justify-content-center">
+            {{#each orders}}
+            <div class="orders-wrap col-11 col-md-9 m-3">
+                <div class="order-header d-flex justify-content-between mt-2">
+                    <p class="m-0 order-id"><span class="text-dark text-capitalize">Order</span> #{{this._id}}</p>
+                    <p class="m-0 text-secondary order-date d-flex align-items-center">Order Placed: {{this.date}}</p>
+                </div>
+                <hr style="color: #b5b5b5;">
+                </hr>
+                {{#each this.products}}
+                <a href="/product/{{this._id}}"
+                    class="text-dark text-decoration-none m-1 d-flex justify-content-center">
+                    <div class="col-12 col-md-10 col-lg-10 mt-3">
+                        <div class="card-box m-1 orders p-2 p-lg-4 row">
+                            <div class=" col-4 col-md-6 p-2 my-2 d-flex justify-content-center position-relative">
+                                <img class="w-100" style="max-width: 260px; height: 130px; object-fit: contain;"
+                                    src="/images/product-images/{{this.images.[0].filename}}" alt="">
+                            </div>
+                            <div class=" col-8 col-md-5 align-items-center d-flex ">
+                                <div class="card-info-wrap ms-md-3">
+                                    {{#if ../this.orderStatus}}
+                                    {{#if ../this.shipmentStatus.delivered.status}}
+                                    <h5 class="text-success text-capitalize">Delivered</h5>
+                                    {{else if ../this.shipmentStatus.outForDelivery.status}}
+                                    <h5 class="text-success text-capitalize">Out for delivery</h5>
+                                    {{else if ../this.shipmentStatus.shipped.status}}
+                                    <h5 class="text-success text-capitalize">Order Shipped </h5>
+                                    {{else if ../this.shipmentStatus.ordrePlaced.status}}
+                                    <h5 class="text-success text-capitalize">Order Confirmed</h5>
+                                    {{else}}
+                                    <h6 class="mt-2 device-name text-capitalize text-success">Order
+                                        {{../this.orderStatus}}</h6>
+                                    {{/if}}
+                                    {{else}}
+                                    <h6 class="mt-2 device-name text-capitalize text-danger">Order Canceled</h6>
+
+                                    {{/if}}
+                                    <p style="font-size: 14px;" class="m-0">{{this.product_name}}</p>
+                                    <h6 class="mt-2">₹ {{this.promo_price}}</h6>
+                                    <p style="font-size: 11px;">(incl. all Taxes)</p>
+                                    <h6 style="font-size: 13px;" class="mt-2">Standard Delivery by
+                                        {{../expectedDeliveryDate}}</h6>
+
+                                </div>
+                            </div>
+                            <div class="  col-md-1 d-flex justify-content-center align-items-center d-none d-md-flex ">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {{/each}}
+                <hr style="color: #b5b5b5;">
+                </hr>
+                <div class="d-flex justify-content-center align-items-center order-footer">
+                    <div class="order-more-wrap d-flex justify-content-center ">
+                        <a class="text-dark text-decoration-none" href="/view-order-details/{{this._id}}">View More</a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <div class="container-fluid mt-5 mb-5 pt-5 pb-5">
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="cart-card border-0 my-2">
+                        <div class="card-body  cart">
+                            <div class="col-sm-12 empty-cart-cls text-center">
+                                <h4><strong>No Order History Available</strong></h4>
+                                <h6 class="mt-4">Explore our wide selection and find something you like</h6>
+                                <a href="/" class="btn btn-primary cart-btn-transform m-3 mt-4 bg-dark border-dark"
+                                    style=" padding: 9px 11px;" data-abc="true">Continue Shopping</a>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        {{/if}}
+    </div>
+</section>
+
+<style>
+    @media screen and (max-width: 768px) {
+        .card-box {
+            flex-direction: row;
+        }
+    }
+
+    @media screen and (max-width:768px) {
+
+        .order-id,
+        .order-date {
+            font-size: 10px;
+        }
+    }
+
+    .orders-wrap {
+        background-color: white;
+        box-shadow: 1px 1px 5px 1px #e5e2e2;
+        padding: 11px;
+        border-radius: 10px;
+    }
+</style>

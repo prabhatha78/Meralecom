@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Meral Dashboard</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/admin/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link href="/admin/css/main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="screen-overlay"></div>
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="index.html" class="brand-wrap">
+                <img src="../images/log.png" class="logo">
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i>
+                </button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-aside">
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu active">
+                    <a class="menu-link"> <i
+                            class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Products</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/product-list">Product List</a>
+                        <a href="/admin/category-list">Categories</a>
+                        <a href="/admin/ingredient-list">Ingredients</a>
+                        <a href="/admin/coupon-list" class="active">Coupons</a>
+                        <a href="/admin/add-product">Add product</a>
+                    </div>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/order-list">Order list</a>
+                    </div>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link"> <i class="icon material-icons md-store"></i>
+                        <span class="text">Users</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/user-list">Users list</a>
+                    </div>
+                </li>
+            </ul>
+            <hr>
+            <br>
+            <br>
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i
+                        class="material-icons md-apps"></i> </button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i
+                                class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
+                            aria-expanded="false"> <img class="img-xs rounded-circle"
+                                src="/images/log.png" alt="User"></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item text-danger" href="/admin/logout"><i
+                                    class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Coupons</h2>
+                    <p>Add, edit or delete coupons</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <form action="/admin/add-coupon" method="POST">
+                                <div class="mb-4">
+                                    <label for="code" class="form-label">Coupon Code</label>
+                                    <input type="text" class="form-control" name="code" id="code" />
+                                </div>
+                                <div class="mb-4">
+                                    <label for="discount" class="form-label">Discount</label>
+                                    <input type="text" class="form-control" name="discount" id="discount" />
+                                </div>
+                                <div class="mb-4">
+                                    <label for="expiry_date" class="form-label">Expiry Date</label>
+                                    <input type="date" class="form-control" name="expiry_date" id="expiry_date" />
+                                </div>
+                                <div class="mb-4">
+                                    <label for="min_purchase" class="form-label">Min Purchase</label>
+                                    <input type="text" class="form-control" name="min_purchase" id="min_purchase" />
+                                </div>
+                                <div class="mb-4">
+                                    <label for="max_purchase" class="form-label">Max Purchase</label>
+                                    <input type="text" class="form-control" name="max_purchase" id="max_purchase" />
+                                </div>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary" type="submit">Add Coupon</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Coupon Code</th>
+                                            <th>Discount</th>
+                                            <th>Expiry Date</th>
+                                            <th>Min Purchase</th>
+                                            <th>Max Purchase</th>
+                                            <th colspan="2" style="text-align:center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each coupons}}
+                                        {{#if this.status}}
+                                        <tr>
+                                            <td>{{this.code}}</td>
+                                            <td><b>{{this.discount}}</b></td>
+                                            <td>{{this.expiry_date}}</td>
+                                            <td>{{this.min_purchase}}</td>
+                                            <td>{{this.max_purchase}}</td>
+                                            <td>
+                                                <a href="/admin/edit-coupon/{{this._id}}"
+                                                    class="btn btn-sm font-sm rounded btn-brand">
+                                                    <i class="material-icons md-edit"></i> Edit
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/delete-coupon/{{this._id}}" class="btn btn-sm font-sm btn-light rounded">
+                                                    <i class="material-icons md-delete_forever"></i> Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {{/if}}
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> <!-- .col// -->
+                    </div> <!-- .row // -->
+                </div> <!-- card body .// -->
+            </div> <!-- card .// -->
+        </section> <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script> ©, Meral-Ecom Pvt Ltd
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">
+                        All rights reserved
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script src="/admin/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/admin/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/admin/js/vendors/select2.min.js"></script>
+    <script src="/admin/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/admin/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="/admin/js/main.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<section class="mt-5 pt-5" style="background:#F8F4EA;">
+    <div class="container pt-5">
+        <div class="row d-flex justify-content-center align-items-center  h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5 p-4">
+                <div class="card shadow-2-strong mt-5 border-0" style="border-radius: 1rem; background-color: rgba(0, 0, 0, 0.829);">
+                    <div class="card-body p-5 text-center">
+
+                        <form action="/check-otp" method="post" style="color:#F8F4EA">
+                            <h3 class="mb-4" style="color:#F8F4EA">Enter OTP</h3>
+                            {{#if otpErr}}
+                            <div class="alert alert-danger  p-2" role="alert" style="font-size: 14px;">
+                                OTP doesn't match
+                            </div>
+                            {{/if}}
+                            Please enter the OTP sent to your email
+                            <div class="form-outline mt-2 mb-4">
+                                <input type="text" placeholder="Enter OTP" name="otp"
+                                    class="mt-1 form-control form-control-lg" required />
+                            </div>
+
+                            <button style="font-size: 15px;" class="otp p-2 mt-2" type="submit">Login</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

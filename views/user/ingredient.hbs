@@ -1,0 +1,13 @@
+<section class="mt-5 pt-5">
+    <div class="shop p-0 m-0">
+        <div class="category">
+            {{#each ingredient}}
+            <div class="sub-category">
+                <a href="/ing_based_list/{{this.ingredient_name}}" value="{{this.ingredient_name}}">{{this.ingredient_name}}</a>
+                <img src="/images/ingredient-images/{{this.image.[0].filename}}">
+            </div>
+            {{/each}}
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,37 @@
+{{!-- Login --}}
+<section class="pt-5">
+    <div class="block p-5 mt-5">
+        <div class="wrapper pt-5">
+            {{#if erro}}
+            <div class="alert alert-danger" role="alert">
+                Incorrect email or password
+            </div>
+            {{/if}}
+            <div class="title pt-5">
+                Meral Welcomes You
+            </div>
+            <form class="form" action="/login" method="post">
+                <div class="input-field">
+                    <label for="">Email</label>
+                    <input type="text" class="input" name="email">
+                </div>
+                <div class="input-field">
+                    <label for="">Password</label>
+                    <input type="password" class="input" name="password">
+                </div>
+                {{!-- <div class="extra">
+                    <a href="">Forgot Password?</a>
+                </div> --}}
+                <div class="input-field">
+                    <input type="submit" value="Log In" class="btn">
+                </div>
+            </form>
+            <div class="extra" style="text-align:center">
+                Don't have an account? <a href="/signup">Sign Up</a>
+            </div>
+        </div>
+        <div class="image d-none d-lg-block">
+            <img src="../images/login.jpeg" style="width:30rem;height:30rem;">
+        </div>
+    </div>
+</section>

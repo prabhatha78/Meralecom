@@ -1,0 +1,523 @@
+<style>
+    .product_list {
+        padding: 20px 10px 20px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .product-box {
+        box-shadow: 0 1px 10px 0 #32261fe3;
+        background-color: ;
+        padding: 5px 5px;
+        position: relative;
+        border: 1px solid #100f0fad;
+        min-width: 10rem;
+        min-height: 20rem;
+    }
+
+    .pro-card:hover,
+    .pro-btn:hover {
+        text-decoration: none;
+    }
+
+    .productgrid-img img {
+        max-width: 100%;
+        max-height: 150px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .product-bottom {
+        text-align: center;
+    }
+
+    .product-name {
+        font-size: 16px;
+        color: #000;
+        text-align: center;
+        margin: 10px 0 10px;
+        font-weight: 600;
+    }
+
+    .price {
+        margin-top: 0;
+        font-size: 15px;
+        font-weight: 400;
+        color: #7e7d7d;
+    }
+
+    .pro-card:hover,
+    .pro-btn:hover {
+        text-decoration: none;
+        color: #bdb8b8;
+    }
+
+    .price .line-through {
+        font-size: 14px;
+        color: #999999;
+        font-weight: 400;
+        vertical-align: 1px;
+        display: inline-block;
+        text-decoration: line-through;
+        margin-left: 4px;
+    }
+
+    .buy-btn {
+        width: 80%;
+        color: #f1f1f1;
+        background: #000;
+        cursor: pointer;
+    }
+
+    .disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        width: 80%;
+        color: #f1f1f1;
+        background: #000;
+    }
+</style>
+
+<style>
+    .wish-heart {
+        float: right;
+    }
+
+    @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+
+    .button--danger,
+    .button--danger:visited {
+        margin-right: 0;
+        border-radius: 3px;
+        cursor: pointer;
+        display: inline-block;
+        min-width: 64px;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: 15px;
+        outline: none;
+        text-align: center;
+        text-decoration: none;
+        text-shadow: none;
+        transition: background 0.1s linear;
+        font-weight: 400;
+        color: #920808;
+
+        box-shadow: none;
+        padding-bottom: 20px;
+        transition-property: border;
+        transition-timing-function: ease-in-out;
+        transition-duration: 0.15s;
+    }
+
+
+
+    .icon-with-text {
+        display: inline-flex;
+        align-items: flex-start;
+    }
+
+    .icon-with-text__icon {
+        flex-shrink: 0;
+        margin-right: 8px;
+        margin-top: -2px;
+    }
+
+    .icon-svg--color-silver {
+        fill: #7c817a;
+        color: #cccccc;
+    }
+
+    .icon-svg--color-red {
+        fill: #920808;
+        color: #920808;
+    }
+
+    .icon-svg {
+        display: inline-block;
+        vertical-align: middle;
+        height: 16px;
+        width: 16px;
+    }
+
+    .heart-full {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+    }
+
+    .btn__effect {
+        display: inline-block;
+        position: relative;
+    }
+
+    .effect-group {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(25deg);
+    }
+
+    .effect-group .effect {
+        display: block;
+        position: absolute;
+        top: 38%;
+        left: 50%;
+        width: 20px;
+        transform-origin: 0px 2px;
+    }
+
+    .effect-group .effect:nth-child(2) {
+        transform: rotate(72deg);
+    }
+
+    .effect-group .effect:nth-child(3) {
+        transform: rotate(144deg);
+    }
+
+    .effect-group .effect:nth-child(4) {
+        transform: rotate(216deg);
+    }
+
+    .effect-group .effect:nth-child(5) {
+        transform: rotate(288deg);
+    }
+
+    .effect-group .effect:before {
+        content: "";
+        display: block;
+        position: absolute;
+        right: 0;
+        border-radius: 1.5px;
+        height: 3px;
+        background: #920808;
+    }
+
+    .effect-group .effect:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10%;
+        border-radius: 50%;
+        width: 3px;
+        height: 3px;
+        background: #ff0000;
+        transform: scale(0, 0);
+    }
+
+    .active .heart-stroke {
+        opacity: 0;
+    }
+
+    .active .heart-full {
+        opacity: 1;
+    }
+
+    .active .icon-svg {
+        animation: bounceIn 0.5s linear;
+    }
+
+    .active .effect:before {
+        animation: fireworkLine 0.5s linear 0.1s;
+    }
+
+    .active .effect:after {
+        animation: fireworkPoint 0.5s linear 0.1s;
+    }
+
+    .broken-heart {
+        position: absolute;
+        left: -16px;
+        top: 0;
+        opacity: 0;
+    }
+
+    .broken-heart--left {
+        transform: rotate(0deg);
+        transform-origin: 60% 200%;
+    }
+
+    .broken-heart--right {
+        transform: rotate(0deg);
+        transform-origin: 63% 200%;
+    }
+
+    .broken-heart--crack {
+        stroke-dasharray: 15;
+        stroke-dashoffset: 15;
+    }
+
+    .deactivate .broken-heart {
+        opacity: 1;
+    }
+
+    .deactivate .broken-heart--left {
+        animation: crackLeft 0.35s cubic-bezier(0.68, -0.55, 0.265, 2.85) 0.15s forwards, hide 0.25s ease-in 0.55s forwards;
+    }
+
+    .deactivate .broken-heart--right {
+        animation: crackRight 0.35s cubic-bezier(0.68, -0.55, 0.265, 2.85) 0.15s forwards, hide 0.25s ease-in 0.55s forwards;
+    }
+
+    .deactivate .broken-heart--crack {
+        animation: crack 0.2s ease-in forwards;
+    }
+
+    .button.one.desktop:not(.active):hover .heart-stroke {
+        animation: pulse 1s ease-out infinite;
+    }
+
+    .button.two.desktop:not(.active):hover .heart-stroke {
+        animation: pulseRed 1s ease-out infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            opacity: 1;
+            transform-origin: center center;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 0.6;
+            transform: scale(1.15);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes pulseRed {
+        0% {
+            transform-origin: center center;
+            transform: scale(1);
+            fill: #000;
+        }
+
+        50% {
+            transform: scale(1.15);
+            fill: #920808;
+        }
+
+        100% {
+            transform: scale(1);
+            fill: rgb(10, 9, 9);
+        }
+    }
+
+    @keyframes fireworkLine {
+        0% {
+            right: 20%;
+            transform: scale(0, 0);
+        }
+
+        25% {
+            right: 20%;
+            width: 6px;
+            transform: scale(1, 1);
+        }
+
+        35% {
+            right: 0;
+            width: 35%;
+        }
+
+        70% {
+            right: 0;
+            width: 4px;
+            transform: scale(1, 1);
+        }
+
+        100% {
+            right: 0;
+            transform: scale(0, 0);
+        }
+    }
+
+    @keyframes fireworkPoint {
+        30% {
+            transform: scale(0, 0);
+        }
+
+        60% {
+            transform: scale(1, 1);
+        }
+
+        100% {
+            transform: scale(0, 0);
+        }
+    }
+
+    @keyframes bounceIn {
+        0% {
+            transform: scale(0);
+        }
+
+        30% {
+            transform: scale(1.25);
+        }
+
+        50% {
+            transform: scale(0.9);
+        }
+
+        70% {
+            transform: scale(1.1);
+        }
+
+        80% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes crackLeft {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(-45deg);
+        }
+    }
+
+    @keyframes crackRight {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(45deg);
+        }
+    }
+
+    @keyframes crack {
+        0% {
+            stroke-dasharray: 15;
+            stroke-dashoffset: 15;
+        }
+
+        80% {
+            stroke-dasharray: 15;
+            stroke-dashoffset: 0;
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes hide {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+</style>
+<section class="pt-5" style="background-image:url('/user/images/banner-bg.png')">
+    <div class="container mt-3 pt-5">
+        <div class="list-head pb-5 pt-2" style="text-align:center">
+            <h1 style="color:#000">OUR PRODUCTS</h1>
+            <p>Build your Cleanse, Hydrate and Protect skincare routine</p>
+        </div>
+
+        <div class="product_list">
+            {{#each products}}
+            <div class="col-md-3 col-sm-6 mb-5">
+                <div class="product-box">
+                    <div class="wish-heart">
+                        <a onclick="addToWishlist('{{this._id}}')"
+                            class="button two inactive desktop button--danger button--full-width">
+                            <div class="icon-with-text">
+                                <div class="icon-with-text__icon">
+                                    <div class="btn__effect">
+                                        <svg class="heart-stroke icon-svg icon-svg--size-4 icon-svg--color-silver"
+                                            viewBox="20 18 29 28" aria-hidden="true" focusable="false">
+                                            <path
+                                                d="M28.3 21.1a4.3 4.3 0 0 1 4.1 2.6 2.5 2.5 0 0 0 2.3 1.7c1 0 1.7-.6 2.2-1.7a3.7 3.7 0 0 1 3.7-2.6c2.7 0 5.2 2.7 5.3 5.8.2 4-5.4 11.2-9.3 15a2.8 2.8 0 0 1-2 1 3.4 3.4 0 0 1-2.2-1c-9.6-10-9.4-13.2-9.3-15 0-1 .6-5.8 5.2-5.8m0-3c-5.3 0-7.9 4.3-8.2 8.5-.2 3.2.4 7.2 10.2 17.4a6.3 6.3 0 0 0 4.3 1.9 5.7 5.7 0 0 0 4.1-1.9c1.1-1 10.6-10.7 10.3-17.3-.2-4.6-4-8.6-8.4-8.6a7.6 7.6 0 0 0-6 2.7 8.1 8.1 0 0 0-6.2-2.7z">
+                                            </path>
+                                        </svg>
+                                        <svg class="heart-full icon-svg icon-svg--size-4 icon-svg--color-red"
+                                            viewBox="0 0 19.2 18.5" aria-hidden="true" focusable="false">
+                                            <path
+                                                d="M9.66 18.48a4.23 4.23 0 0 1-2.89-1.22C.29 10.44-.12 7.79.02 5.67.21 2.87 1.95.03 5.42.01c1.61-.07 3.16.57 4.25 1.76A5.07 5.07 0 0 1 13.6 0c2.88 0 5.43 2.66 5.59 5.74.2 4.37-6.09 10.79-6.8 11.5-.71.77-1.7 1.21-2.74 1.23z">
+                                            </path>
+                                        </svg>
+                                        <svg class="broken-heart" xmlns="http://www.w3.org/2000/svg" width="48"
+                                            height="16" viewBox="5.707 17 48 16">
+                                            <g fill="#920808">
+                                                <path class="broken-heart--left"
+                                                    d="M29.865 32.735V18.703a4.562 4.562 0 0 0-3.567-1.476c-2.916.017-4.378 2.403-4.538 4.756-.118 1.781.227 4.006 5.672 9.737a3.544 3.544 0 0 0 2.428 1.025l-.008-.008.013-.002z" />
+                                                <path class="broken-heart--right"
+                                                    d="M37.868 22.045c-.135-2.588-2.277-4.823-4.697-4.823a4.258 4.258 0 0 0-3.302 1.487l-.004-.003v14.035a3.215 3.215 0 0 0 2.289-1.033c.598-.596 5.882-5.99 5.714-9.663z" />
+                                            </g>
+                                            <path class="broken-heart--crack" fill="none" stroke="#FFF"
+                                                stroke-miterlimit="10" d="M29.865 18.205v14.573" />
+                                        </svg>
+                                        <div class="effect-group">
+                                            <span class="effect"></span>
+                                            <span class="effect"></span>
+                                            <span class="effect"></span>
+                                            <span class="effect"></span>
+                                            <span class="effect"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <a href="/product/{{this._id}}" class="pro-card">
+                        <div class="productgrid-img">
+                            <img src="/images/product-images/{{this.images.[0].filename}}">
+                        </div>
+                        <div class="product-bottom">
+                            <div class="product-name">{{this.product_name}}</div>
+                            <div class="price">
+                                <span class="rupee-icon">₹</span> {{this.promo_price}}
+                                <span class="line-through"><span class="rupee-icon">₹</span> {{this.reg_price}}</span>
+                            </div>
+                    </a>
+                    <div class="pt-2">
+                        {{#if this.quantity}}
+                        <button class="buy-btn" onclick="buynow('{{this._id}}','{{this.promo_price}}')">Buy Now</button>
+                        {{else}}
+                        <button class="disabled">Out of stock</button>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {{/each}}
+    </div>
+    </div>
+    </div>
+</section>
+
+<script>
+    $(".button").click(function () {
+        if ($(this).hasClass("deactivate")) {
+            $(this).removeClass("deactivate")
+        }
+        if ($(this).hasClass("active")) {
+            $(this).addClass("deactivate")
+        }
+        $(this).toggleClass("animate");
+        $(this).toggleClass("active");
+        $(this).toggleClass("inactive");
+    });
+</script>
+
+<script>
+
+</script>

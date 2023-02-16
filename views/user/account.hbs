@@ -1,0 +1,109 @@
+<section class="p-3 page-header">
+
+    <div class="headerhny-title text-center mt-3 mb-3">
+        <h3 class="hny-title mb-0 p-4"> My Account</h3>
+
+    </div>
+</section>
+
+<section class="mt-3">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6 col-lg-6 p-4">
+                <a href="/profile" class="text-decoration-none text-dark">
+                    <div class=" accout-card   d-flex flex-row" >
+                        <div class=" card-body">
+                            <i class="fa fa-user fa-3x"></i>
+                            <h5 class="card-title accout-card-title">My Profile</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-6 p-4">
+                <a href="/address" class="text-decoration-none text-dark">
+                    <div class=" accout-card   d-flex flex-row">
+                        <div class=" card-body">
+                            <i class="fa-solid fa-address-card fa-3x"></i>
+                            <h5 class="card-title accout-card-title">My Address</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-6 p-4">
+                <a href="/orders" class="text-decoration-none text-dark">
+                    <div class=" accout-card   d-flex flex-row">
+                        <div class=" card-body">
+                            <i class="fa-solid fa-cart-shopping fa-3x"></i>
+                            <h5 class="card-title accout-card-title">My orders</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-6 p-4">
+                <a href="/wishlist" class="text-decoration-none text-dark">
+                    <div class=" accout-card   d-flex flex-row">
+                        <div class=" card-body">
+                            <i class="fa-solid fa-bag-shopping fa-3x"></i>
+                            <h5 class="card-title accout-card-title">My Wishlist</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-6 p-4">
+                <a href="/log-out" class="text-decoration-none text-dark">
+                    <div class=" accout-card   d-flex flex-row">
+                        <div style="flex: 3;" class=" card-body">
+                            <h5 class="card-title"><i class="fa-solid fa-power-off me-2"></i>
+                            <span style="color:rgb(158, 11, 11)">Logout</span></h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</section>
+
+<style>
+    .card-body {
+        display: flex;
+        column-gap: 2rem;
+    }
+
+    .accout-card {
+        border-radius: 10px;
+        border: 2px solid #dfdfdf;
+        background-color: #f9f9f9;
+        transition: all .34s;
+
+    }
+
+    .accout-card-title {
+        color: #000;
+    }
+
+    .accout-card:hover {
+        border: 2px solid #000;
+
+    }
+
+    .card-box {
+        background: #f7f7f7;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .box-card-btn-wrap>a:hover {
+        background-color: #000;
+        color: #fff;
+    }
+
+    @media screen and (max-width:768px) {
+        .card-box {
+            flex-direction: column;
+        }
+    }
+</style>

@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Meral Dashboard</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/admin/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link href="/admin/css/main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="screen-overlay"></div>
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="/admin" class="brand-wrap">
+                <img src="/images/log.png" class="logo" alt="Meral Dashboard">
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i>
+                </button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link"> <i
+                            class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Products</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/product-list">Product List</a>
+                        <a href="/admin/category-list">Categories</a>
+                        <a href="/admin/ingredient-list">Ingredients</a>
+                        <a href="/admin/coupon-list">Coupons</a>
+                        <a href="/admin/add-product">Add product</a>
+                    </div>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/order-list">Order list</a>
+                    </div>
+                </li>
+                <li class="menu-item has-submenu active">
+                    <a class="menu-link"> <i class="icon material-icons md-store"></i>
+                        <span class="text">Users</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/user-list" class="active">Users list</a>
+                    </div>
+                </li>
+            </ul>
+            <hr>
+            <br>
+            <br>
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i
+                        class="material-icons md-apps"></i> </button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i
+                                class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
+                            aria-expanded="false"> <img class="img-xs rounded-circle"
+                                src="/images/log.png" alt="User"></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item text-danger" href="/admin/logout"><i
+                                    class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Contact Number</th>
+                                    <th>Status</th>
+                                    <th colspan="2" style="text-align:center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each user}}
+                                <tr>
+                                    <td width="40%">
+                                        <a href="#" class="itemside">
+                                            {{!-- <div class="left">
+                                                <img src="/admin/imgs/people/avatar1.jpg" class="img-sm img-avatar"
+                                                    alt="Userpic">
+                                            </div> --}}
+                                            <div class="info pl-3">
+                                                <h6 class="mb-0 title">{{this.firstname}} {{this.lastname}}</h6>
+                                                {{!-- <small class="text-muted">Seller ID: #439</small> --}}
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td>{{this.email}}</td>
+                                    <td>{{this.contact}}</td>
+                                    {{#if this.status}}
+                                    <td><span class="badge rounded-pill alert-success mt-15">Active</span></td>
+                                    {{else}}
+                                    <td><span class="badge rounded-pill alert-danger mt-15">Inactive</span></td>
+                                    {{/if}}
+                                    <td class="text-end">
+                                        <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
+                                    </td>
+                                    {{#if status}}
+                                    <td class="text-end">
+                                        <a href="/admin/delete-user/{{this._id}}" class="btn btn-sm btn-bbrand rounded font-sm mt-15">Block</a>
+                                    </td>
+                                    {{else}}
+                                    <td class="text-end">
+                                        <a href="/admin/unblock-user/{{this._id}}" class="btn btn-sm btn-ubrand rounded font-sm mt-15">Unblock</a>
+                                    </td>
+                                    {{/if}}
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table> <!-- table-responsive.// -->
+                    </div>
+                </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+        </section> <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script data-cfasync="false"
+                        src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script> ©, Meral-Ecom Pvt Ltd
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">
+                        All rights reserved
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script src="/admin/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/admin/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/admin/js/vendors/select2.min.js"></script>
+    <script src="/admin/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/admin/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="/admin/js/main.js" type="text/javascript"></script>
+</body>
+</html>

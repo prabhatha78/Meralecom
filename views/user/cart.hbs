@@ -1,0 +1,151 @@
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<section class="pt-5" style="background:#F1F1F1">
+    <div class="container-fluid p-5 mt-5">
+        {{#if cartItems}}
+        <div class="list-head pl-5 pb-4 pt-2" style="display: flex;justify-content:center">
+            <h1 style="color:#000">CART</h1>
+        </div>
+
+        {{#each cartItems}}
+        <div class="container">
+            <hr style="border:1px solid black">
+            <div class="cart pt-3 pb-3">
+                <div class="cart-block1">
+                    <div style="display: flex;">
+                        <div class="cart-img">
+                            <a href="/product/{{this.product._id}}"><img
+                                    src="/images/product-images/{{this.product.images.[0].filename}} "
+                                    style="width:8rem;height:8rem; object-fit:cover"></a>
+                        </div>
+
+                        <div class="pro-details col-md-7">
+                            <div class="pro-title">
+                                <h4>{{this.product.product_name}}</h4>
+                                <h6 style="font-size: small;font-weight:500">{{this.product.category}}</h6>
+                                <p style="font-size:small;">{{this.product.volume}}<br>Inclusive of all taxes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;column-gap:50px;">
+                        <div class="pt-4 pl-4" style="color:#000">
+                            <button class="cart-item-count mr-3"
+                                onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1)">-</button>
+                            <span id="{{this.product._id}}">{{this.quantity}}</span>
+                            <button class="cart-item-count ml-3"
+                                onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1)">+</button>
+                        </div>
+                        <div class="price pt-4">
+                            <span class="float-right" style="font-size:medium;">MRP: ₹ <span
+                                    id="price{{this.product._id}}">{{this.price}}</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-details">
+                    <div>
+                        <button class="cart-item-count" style="border:none"
+                            onclick="removeFromCart('{{this._id}}','{{this.product._id}}')"><i
+                                class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+        <div class="container">
+            <hr style="border:3px solid black">
+            <div class="total mt-3 mb-5">
+                <div class="col-md-8">
+                    <h5>SUBTOTAL</h5>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="float-right">MRP: ₹ <span id="{{cart._id}}">{{cart.total}}</span></h6>
+                </div>
+            </div>
+            <a href="/checkout" type="button" class="cart-button">CONTINUE TO CHECKOUT</a>
+        </div>
+
+
+        {{else}}
+        <div class="list-head p-4" style="text-align:center">
+            <div class="p-4">
+                <img src="/images/cart.png" style="max-width:200px">
+            </div>
+            <h3 style="color:rgb(124, 2, 2)">Your cart is empty</h3>
+            <p style="color:#000">Explore our collection.</p>
+            <a href="/shop">
+                <button class="btn remove-wishlist btn-sm">Start Shopping</button>
+            </a>
+        </div>
+
+        {{/if}}
+    </div>
+</section>
+<style>
+    .remove-wishlist {
+        color: #fff;
+        background-color: #000;
+        border-color: #000;
+    }
+</style>
+<script>
+    function changeQuantity(cartId, proId, count) {
+        let quantity = parseInt(document.getElementById(proId).innerHTML)
+        let price = parseInt(document.getElementById('price' + proId).innerHTML)
+        let total = parseInt(document.getElementById(cartId).innerHTML)
+        count = parseInt(count)
+        $.ajax({
+            url: '/change-product-quantity/',
+            data: {
+                cart: cartId,
+                product: proId,
+                count: count,
+                quantity: quantity
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.removeProduct) {
+                    location.reload()
+                } else if (response.warning) {
+                    swal(
+                        'Warning!',
+                        'You exceeded the quantity limit!',
+                        'warning'
+                    )
+                } else {
+                    document.getElementById(cartId).innerHTML = total + (price * count / quantity)
+                    document.getElementById(proId).innerHTML = quantity + count
+                    document.getElementById('price' + proId).innerHTML = (price / quantity) * (quantity + count)
+                }
+            }
+        })
+    }
+    function removeFromCart(cartId, proId) {
+        let price = parseInt(document.getElementById('price' + proId).innerHTML)
+        let quantity = parseInt(document.getElementById(proId).innerHTML)
+        $.ajax({
+            url: '/remove-from-cart/',
+            data: {
+                cartId: cartId,
+                proId: proId,
+                price: price,
+                quantity: quantity
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.removeProduct) {
+                    swal({
+                        title: "Warning",
+                        text: "Product removed from cart",
+                        icon: "info",
+                        dangerMode: true,
+                    }).then(() => {
+                        location.reload();
+                    })
+
+
+                }
+            }
+        })
+    }
+</script>
