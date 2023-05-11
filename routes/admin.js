@@ -95,7 +95,7 @@ router.post('/add-category', verifyAdmin, uploadCategory, function (req, res) {
 
 router.get('/edit-category/:id', verifyAdmin, async (req, res) => {
     let category = await adminController.getAllCategory()
-    adminController.getCategory(req.params.id).then((cat) => {
+    adminController.getCategoryById(req.params.id).then((cat) => {
         res.render('admin/edit-category', { cat, category, admin: true })
     })
 })
@@ -136,7 +136,7 @@ router.post('/add-ingredient', verifyAdmin, uploadIngredient, function (req, res
 
 router.get('/edit-ingredient/:id', verifyAdmin, async function (req, res) {
     let ingredient = await adminController.getAllIngredient()
-    adminController.getIngredient(req.params.id).then((ingre) => {
+    adminController.getIngredientById(req.params.id).then((ingre) => {
         res.render('admin/edit-ingredient', { ingre, ingredient, admin: true })
     })
 })
@@ -303,7 +303,7 @@ router.post('/sales-report',verifyAdmin,(req,res)=>{
 })
 
 router.get('/logout', function (req, res) {
-    req.session.adminLogin= false;
+    req.session.adminloggedIn= false;
     res.redirect('/admin')
 })
 

@@ -52,7 +52,7 @@ module.exports = {
         })
     },
 
-    getCategory: (catId) => {
+    getCategoryById: (catId) => {
         return new Promise(async (resolve, reject) => {
             db.get().collection(collection.CATEGORY_COLLECTION).findOne({_id:ObjectId(catId)}).then((response) => {
                 resolve(response)
@@ -112,7 +112,7 @@ module.exports = {
         })
     },
 
-    getIngredient: (ingreId) => {
+    getIngredientById: (ingreId) => {
         return new Promise(async (resolve, reject) => {
             db.get().collection(collection.INGREDIENT_COLLECTION).findOne({ _id: ObjectId(ingreId) }).then((response) => {
                 resolve(response)
