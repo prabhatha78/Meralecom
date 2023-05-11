@@ -195,22 +195,29 @@ router.post('/edit-product/:id', verifyAdmin, uploadProduct, async function (req
     if (req.files.image1 == null) {
         image1 = await adminController.getProductImage(req.params.id, 0)
     } else {
-        exist = await adminController.getProductImage(req.params.id, 0)
-        image1 = req.files.image1
+        exist = await adminController.getProductImage(req.params.id, 0);
+        image1 = req.files.image1[0];
+        deleteImage.deleteFile(exist.path)
+
+
     }
 
     if (req.files.image2 == null) {
         image2 = await adminController.getProductImage(req.params.id, 1)
     } else {
         exist = await adminController.getProductImage(req.params.id, 1)
-        image2 = req.files.image2
+        image2 = req.files.image2[0];
+        deleteImage.deleteFile(existImage.path)
+
     }
 
     if (req.files.image3 == null) {
         image3 = await adminController.getProductImage(req.params.id, 2)
     } else {
         exist = await adminController.getProductImage(req.params.id, 2)
-        image3 = req.files.image3
+        image3 = req.files.image3[0];
+        deleteImage.deleteFile(existImage.path)
+
     }
 
     req.body.images = [image1, image2, image3]
