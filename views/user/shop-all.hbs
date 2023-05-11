@@ -433,6 +433,7 @@
 
         <div class="product_list">
             {{#each products}}
+            {{#if this.status}}
             <div class="col-md-3 col-sm-6 mb-5">
                 <div class="product-box">
                     <div class="wish-heart">
@@ -498,6 +499,7 @@
             </div>
 
         </div>
+        {{/if}}
         {{/each}}
     </div>
     </div>
